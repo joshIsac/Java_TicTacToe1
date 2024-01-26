@@ -13,6 +13,7 @@ import java.sql.CallableStatement;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.Vector;
+import javax.lang.model.util.Types;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -110,8 +111,8 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
        
     private void gameScore()
     {
-        jlblPlayerX.setText(String.valueOf(xCount));
-        jlblPlayerO.setText(String.valueOf(oCount));
+        jtxtPlayerX.setText(String.valueOf(xCount));
+        jtxtPlayerO.setText(String.valueOf(oCount));
     }
      
     
@@ -332,8 +333,8 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jlblPlayerO = new javax.swing.JLabel();
-        jlblPlayerX = new javax.swing.JLabel();
+        jtxtPlayerO = new javax.swing.JTextField();
+        jtxtPlayerX = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
@@ -385,17 +386,15 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
         jLabel4.setText("Player O:");
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
 
-        jlblPlayerO.setFont(new java.awt.Font("Segoe UI", 1, 50)); // NOI18N
-        jlblPlayerO.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlblPlayerO.setText("0");
-        jlblPlayerO.setOpaque(true);
-        jPanel4.add(jlblPlayerO, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, 220, 60));
+        jtxtPlayerO.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
+        jtxtPlayerO.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtxtPlayerO.setText("0");
+        jPanel4.add(jtxtPlayerO, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, 160, 70));
 
-        jlblPlayerX.setFont(new java.awt.Font("Segoe UI", 1, 50)); // NOI18N
-        jlblPlayerX.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlblPlayerX.setText("0");
-        jlblPlayerX.setOpaque(true);
-        jPanel4.add(jlblPlayerX, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, 220, 60));
+        jtxtPlayerX.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
+        jtxtPlayerX.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtxtPlayerX.setText("0");
+        jPanel4.add(jtxtPlayerX, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, 160, 70));
 
         jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 610, 260));
 
@@ -575,7 +574,6 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
 
         jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 490, 60));
 
-        jTable1.setBackground(new java.awt.Color(0, 0, 255));
         jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -591,7 +589,7 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 640, 780, 200));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 660, 780, 160));
 
         jPanel7.setBackground(new java.awt.Color(0, 0, 102));
         jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -691,8 +689,8 @@ private JFrame frame;
         jBtnTic8.setEnabled(true);
         jBtnTic9.setEnabled(true);
         
-        jlblPlayerX.setText("0");
-        jlblPlayerO.setText("0");
+        jtxtPlayerX.setText("0");
+        jtxtPlayerO.setText("0");
       
         
         jBtnTic1.setText("");
@@ -848,12 +846,89 @@ private JFrame frame;
 
     }//GEN-LAST:event_jResetbtn1ActionPerformed
 
+     
+    
+    
     private void generateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateBtnActionPerformed
-        // TODO add your handling code here:   
+  int xWins = Integer.parseInt(jtxtPlayerX.getText());
+    int oWins = Integer.parseInt(jtxtPlayerO.getText());
+
+    // Connect to database, if not already connected
+    connect(); 
+
+    // Start a transaction
+    try {
+        con.setAutoCommit(false);
+
+        // Step 2: Update the `winandlossstatistics` table
+        updatePlayerStatistics(playerX, "X", xWins);
+        updatePlayerStatistics(playerO, "O", oWins);
+
+        // Commit the transaction
+        con.commit();
+    } catch (SQLException e) {
+        try {
+            con.rollback();
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+        e.printStackTrace();
+    } finally {
+        try {
+            con.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Step 3: Refresh the JTable (`jtable1`)
+    updateJTable();
+}
+
+// Method to update individual player statistics
+private void updatePlayerStatistics(String playerName, String playerType, int wins) throws SQLException {
+    String sql = "UPDATE winandlossstatistic SET TotalMatches = TotalMatches + 1, "
+               + "Wins = ?, Loss = TotalMatches - Wins, "
+               + "WinPercentage = (Wins * 100 / TotalMatches) "
+               + "WHERE player_name = ? AND player_type = ?";
+
+    try (PreparedStatement pst = con.prepareStatement(sql)) {
+        pst.setInt(1, wins);
+        pst.setString(2, playerName);
+        pst.setString(3, playerType);
+        pst.executeUpdate();
+    }
+}
+
+// Method to update JTable with latest statistics from `winandlossstatistics`
+private void updateJTable() {
+    try {
+        String sql = "SELECT * FROM winandlossstatistic";
+        PreparedStatement pst = con.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Clear the table
+
+        while (rs.next()) {
+            Vector<String> vector = new Vector<>();
+            vector.add(rs.getString("id"));
+            vector.add(rs.getString("player_name"));
+            vector.add(rs.getString("player_type"));
+            vector.add(rs.getString("TotalMatches"));
+            vector.add(rs.getString("Wins"));
+            vector.add(rs.getString("Loss"));
+            vector.add(rs.getString("WinPercentage"));
+
+            model.addRow(vector);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
     }//GEN-LAST:event_generateBtnActionPerformed
     /**
      * @param args the command line arguments
-     */
+     */ 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -887,6 +962,7 @@ private JFrame frame;
             }
                
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -919,8 +995,8 @@ private JFrame frame;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jexitbtn;
-    private javax.swing.JLabel jlblPlayerO;
-    private javax.swing.JLabel jlblPlayerX;
+    private javax.swing.JTextField jtxtPlayerO;
+    private javax.swing.JTextField jtxtPlayerX;
     private javax.swing.JButton searchbtn1;
     // End of variables declaration//GEN-END:variables
 }
