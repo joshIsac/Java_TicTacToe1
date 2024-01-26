@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.awt.Color;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.Vector;
 
 
 import javax.swing.JFrame;
@@ -354,6 +355,11 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
         jBtnTic9 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanel7 = new javax.swing.JPanel();
+        generateBtn = new javax.swing.JButton();
+        searchbtn1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -421,7 +427,7 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
                 jNewGamebtnActionPerformed(evt);
             }
         });
-        jPanel5.add(jNewGamebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 550, 110));
+        jPanel5.add(jNewGamebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 570, 110));
 
         jexitbtn.setFont(new java.awt.Font("Tahoma", 1, 50)); // NOI18N
         jexitbtn.setText("Exit");
@@ -433,7 +439,7 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
                 jexitbtnActionPerformed(evt);
             }
         });
-        jPanel5.add(jexitbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 280, 110));
+        jPanel5.add(jexitbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, 280, 110));
 
         jButton1.setText("jButton1");
         jPanel5.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 560, -1, -1));
@@ -448,11 +454,11 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
                 jResetbtn1ActionPerformed(evt);
             }
         });
-        jPanel5.add(jResetbtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 280, 110));
+        jPanel5.add(jResetbtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 280, 110));
 
         jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 610, 320));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 80, 710, 630));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, 650, 630));
 
         jPanel3.setBackground(new java.awt.Color(95, 158, 160));
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -467,9 +473,10 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
                 jBtnTic3ActionPerformed(evt);
             }
         });
-        jPanel3.add(jBtnTic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 220, 160));
+        jPanel3.add(jBtnTic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 210, 160));
 
         jBtnTic1.setFont(new java.awt.Font("Tahoma", 1, 96)); // NOI18N
+        jBtnTic1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jBtnTic1.setMaximumSize(new java.awt.Dimension(150, 125));
         jBtnTic1.setMinimumSize(new java.awt.Dimension(150, 125));
         jBtnTic1.setPreferredSize(new java.awt.Dimension(150, 125));
@@ -489,7 +496,7 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
                 jBtnTic2ActionPerformed(evt);
             }
         });
-        jPanel3.add(jBtnTic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 190, 160));
+        jPanel3.add(jBtnTic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 200, 160));
 
         jBtnTic6.setFont(new java.awt.Font("Tahoma", 1, 96)); // NOI18N
         jBtnTic6.setMaximumSize(new java.awt.Dimension(150, 125));
@@ -500,7 +507,7 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
                 jBtnTic6ActionPerformed(evt);
             }
         });
-        jPanel3.add(jBtnTic6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, 220, 170));
+        jPanel3.add(jBtnTic6, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 180, 210, 170));
 
         jBtnTic4.setFont(new java.awt.Font("Tahoma", 1, 96)); // NOI18N
         jBtnTic4.setMaximumSize(new java.awt.Dimension(150, 125));
@@ -522,7 +529,7 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
                 jBtnTic5ActionPerformed(evt);
             }
         });
-        jPanel3.add(jBtnTic5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, 190, 170));
+        jPanel3.add(jBtnTic5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, 200, 170));
 
         jBtnTic7.setFont(new java.awt.Font("Tahoma", 1, 96)); // NOI18N
         jBtnTic7.setMaximumSize(new java.awt.Dimension(150, 125));
@@ -544,7 +551,7 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
                 jBtnTic8ActionPerformed(evt);
             }
         });
-        jPanel3.add(jBtnTic8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 190, 170));
+        jPanel3.add(jBtnTic8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 200, 170));
 
         jBtnTic9.setFont(new java.awt.Font("Tahoma", 1, 96)); // NOI18N
         jBtnTic9.setMaximumSize(new java.awt.Dimension(150, 125));
@@ -555,9 +562,9 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
                 jBtnTic9ActionPerformed(evt);
             }
         });
-        jPanel3.add(jBtnTic9, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 360, 220, 170));
+        jPanel3.add(jBtnTic9, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 360, 210, 170));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 650, 540));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 650, 550));
 
         jPanel6.setBackground(new java.awt.Color(153, 0, 153));
         jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -568,9 +575,41 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
         jLabel5.setText("        TIC TAC TOE");
         jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 480, 60));
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 490, 60));
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 490, 60));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1410, 820));
+        jTable1.setBackground(new java.awt.Color(0, 0, 0));
+        jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jTable1.setForeground(new java.awt.Color(255, 255, 255));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "id", "playername", "playertype", "totalmatches", "wins", "loss"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 640, 780, 200));
+
+        jPanel7.setBackground(new java.awt.Color(0, 0, 102));
+        jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        generateBtn.setBackground(new java.awt.Color(153, 255, 255));
+        generateBtn.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        generateBtn.setText("Generate wins and loss ");
+        jPanel7.add(generateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 360, 30));
+
+        searchbtn1.setText("Search");
+        jPanel7.add(searchbtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, -1, -1));
+
+        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 680, 400, 90));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1410, 860));
 
         pack();
         setLocationRelativeTo(null);
@@ -845,6 +884,7 @@ private JFrame frame;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton generateBtn;
     private javax.swing.JButton jBtnTic1;
     private javax.swing.JButton jBtnTic2;
     private javax.swing.JButton jBtnTic3;
@@ -868,9 +908,13 @@ private JFrame frame;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JButton jResetbtn1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JButton jexitbtn;
     private javax.swing.JLabel jlblPlayerO;
     private javax.swing.JLabel jlblPlayerX;
+    private javax.swing.JButton searchbtn1;
     // End of variables declaration//GEN-END:variables
 }
