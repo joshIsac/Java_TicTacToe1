@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Java_TicTacToe1;
-
+//importing libraries
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
