@@ -9,14 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.awt.Color;
-import java.sql.CallableStatement;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.Vector;
 import javax.lang.model.util.Types;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JTextField;
+
 
 /**
  *
@@ -33,18 +33,26 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
     private int xCount=0;
     private int oCount=0;
     boolean checker;
+    private int totalMatchesX = 0;
+    private int totalMatchesO = 0;
+    private int xWins = 0;
+    private int oWins = 0;
+    private int xLoss = 0;
+    private int oLoss = 0;
+    private double winPercentageX = 0.0;
+    private double winPercentageO = 0.0;
     private Java_TicTacToe1 tictactoe;
-   private DefaultTableModel tableModel;
+    
+    
     public Java_TicTacToe1() {
         initComponents();
         connect();
         getPlayerNames();
-          updateLabels();
+        updateLabels();
        }
     
      Connection con;
     PreparedStatement pat;
-    DefaultTableModel model;
   
     //Setting up connection to database
       public void connect() {
@@ -155,6 +163,9 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
           jBtnTic2.setBackground(Color.GREEN);
            jBtnTic3.setBackground(Color.GREEN);
            xCount++;
+           xWins++;
+           xLoss = totalMatchesX - xWins;
+           winPercentageX = calculateWinPercentage(xWins, totalMatchesX);
            gameScore();
         }
        
@@ -166,6 +177,10 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
         jBtnTic5.setBackground(Color.GREEN);
         jBtnTic6.setBackground(Color.GREEN);
         xCount++;
+        xWins++;
+        xLoss = totalMatchesX - xWins;
+        winPercentageX = calculateWinPercentage(xWins, totalMatchesX);
+
         gameScore();
         }
        
@@ -176,56 +191,80 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
         jBtnTic8.setBackground(Color.GREEN);
         jBtnTic9.setBackground(Color.GREEN);
         xCount++;
+        xWins++;
+        xLoss = totalMatchesX - xWins;
+        winPercentageX = calculateWinPercentage(xWins, totalMatchesX);
+
         gameScore();
         }
         //diagonal wins for X
-         if(b1==("X")&& b5==("X")&& b9==("X"))
+         if(b1.equals("X")&& b5.equals("X")&& b9.equals("X"))
        {
          JOptionPane.showMessageDialog(this,"Player X wins","Tic Tac Toe",JOptionPane.INFORMATION_MESSAGE);
         jBtnTic1.setBackground(Color.GREEN);
         jBtnTic5.setBackground(Color.GREEN);
         jBtnTic9.setBackground(Color.GREEN);
         xCount++;
+        xWins++;
+        xLoss = totalMatchesX - xWins;
+        winPercentageX = calculateWinPercentage(xWins, totalMatchesX);
+
         gameScore();
         }
-          if(b3==("X")&& b5==("X")&& b7==("X"))
+          if(b3.equals("X")&& b5.equals("X")&& b7.equals("X"))
        {
          JOptionPane.showMessageDialog(this,"Player X wins","Tic Tac Toe",JOptionPane.INFORMATION_MESSAGE);
         jBtnTic3.setBackground(Color.GREEN);
         jBtnTic5.setBackground(Color.GREEN);
         jBtnTic7.setBackground(Color.GREEN);
         xCount++;
+        xWins++;
+        xLoss = totalMatchesX - xWins;
+        winPercentageX = calculateWinPercentage(xWins, totalMatchesX);
+
         gameScore();
         }
         
           //Vertical wins for X
          
-          if(b1==("X")&& b4==("X")&& b7==("X"))
+          if(b1.equals("X")&& b4.equals("X")&& b7.equals("X"))
        {
          JOptionPane.showMessageDialog(this,"Player X wins","Tic Tac Toe",JOptionPane.INFORMATION_MESSAGE);
         jBtnTic1.setBackground(Color.GREEN);
         jBtnTic4.setBackground(Color.green);
         jBtnTic7.setBackground(Color.green);
         xCount++;
+        xWins++;
+        xLoss = totalMatchesX - xWins;
+        winPercentageX = calculateWinPercentage(xWins, totalMatchesX);
+
         gameScore();
         }
           
-           if(b2==("X")&& b5==("X")&& b8==("X"))
+           if(b2.equals("X")&& b5.equals("X")&& b8.equals("X"))
        {
          JOptionPane.showMessageDialog(this,"Player X wins","Tic Tac Toe",JOptionPane.INFORMATION_MESSAGE);
         jBtnTic2.setBackground(Color.GREEN);
         jBtnTic5.setBackground(Color.GREEN);
         jBtnTic8.setBackground(Color.GREEN);
         xCount++;
+        xWins++;
+        xLoss = totalMatchesX - xWins;
+        winPercentageX = calculateWinPercentage(xWins, totalMatchesX);
+
         gameScore();
         }
-            if(b3==("X")&& b6==("X")&& b9==("X"))
+            if(b3.equals("X")&& b6.equals("X")&& b9.equals("X"))
        {
          JOptionPane.showMessageDialog(this,"Player X wins","Tic Tac Toe",JOptionPane.INFORMATION_MESSAGE);
         jBtnTic3.setBackground(Color.GREEN);
         jBtnTic6.setBackground(Color.GREEN);
         jBtnTic9.setBackground(Color.GREEN);
         xCount++;
+        xWins++;
+        xLoss = totalMatchesX - xWins;
+        winPercentageX = calculateWinPercentage(xWins, totalMatchesX);
+
         gameScore();
         }
         
@@ -239,6 +278,10 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
           jBtnTic2.setBackground(Color.orange);
            jBtnTic3.setBackground(Color.orange);
            oCount++;
+            oWins++;
+        oLoss = totalMatchesO - oWins;
+        winPercentageO = calculateWinPercentage(oWins, totalMatchesO);
+
            gameScore();
         }
        
@@ -250,6 +293,9 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
         jBtnTic5.setBackground(Color.orange);
         jBtnTic6.setBackground(Color.orange);
         oCount++;
+        oWins++;
+        oLoss = totalMatchesO - oWins;
+        winPercentageO = calculateWinPercentage(oWins, totalMatchesO);
         gameScore();
         }
        
@@ -260,6 +306,10 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
         jBtnTic8.setBackground(Color.orange);
         jBtnTic9.setBackground(Color.orange);
         oCount++;
+        oWins++;
+        oLoss = totalMatchesO - oWins;
+        winPercentageO = calculateWinPercentage(oWins, totalMatchesO);
+
         gameScore();
         }
         //diagonal wins for O
@@ -270,6 +320,10 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
         jBtnTic5.setBackground(Color.orange);
         jBtnTic9.setBackground(Color.orange);
         oCount++;
+        oWins++;
+        oLoss = totalMatchesO - oWins;
+        winPercentageO = calculateWinPercentage(oWins, totalMatchesO);
+
         gameScore();
         }
           if(b3.equals("O")&& b5.equals("O")&& b7.equals("O"))
@@ -279,6 +333,10 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
         jBtnTic5.setBackground(Color.orange);
         jBtnTic7.setBackground(Color.orange);
         oCount++;
+       oWins++;
+        oLoss = totalMatchesO - oWins;
+        winPercentageO = calculateWinPercentage(oWins, totalMatchesO);
+
         gameScore();
         }
         
@@ -291,6 +349,10 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
         jBtnTic4.setBackground(Color.orange);
         jBtnTic7.setBackground(Color.orange);
         oCount++;
+        oWins++;
+        oLoss = totalMatchesO - oWins;
+        winPercentageO = calculateWinPercentage(oWins, totalMatchesO);
+
         gameScore();
         }
           
@@ -301,6 +363,10 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
         jBtnTic5.setBackground(Color.orange);
         jBtnTic8.setBackground(Color.orange);
         oCount++;
+         oWins++;
+        oLoss = totalMatchesO - oWins;
+        winPercentageO = calculateWinPercentage(oWins, totalMatchesO);
+
         gameScore();
         }
             if(b3.equals("O")&& b6.equals("O")&& b9.equals("O"))
@@ -310,6 +376,10 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
         jBtnTic6.setBackground(Color.orange);
         jBtnTic9.setBackground(Color.orange);
         oCount++;
+        oWins++;
+        oLoss = totalMatchesO - oWins;
+        winPercentageO = calculateWinPercentage(oWins, totalMatchesO);
+
         gameScore();
         }
            else 
@@ -323,6 +393,13 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
      }
             
    }
+   private double calculateWinPercentage(int wins, int totalMatches) {
+    if (totalMatches == 0) {
+        return 0.0; // Avoid division by zero
+    }
+    return ((double) wins / totalMatches) * 100.0;
+}
+
    /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -359,11 +436,8 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
         jBtnTic9 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
         generateBtn = new javax.swing.JButton();
-        jupdatebtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -579,23 +653,6 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
 
         jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 490, 60));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jTable1.setForeground(new java.awt.Color(255, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "playername", "playertype", "totalmatches", "wins", "loss", "winpercentage"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 660, 780, 160));
-
         jPanel7.setBackground(new java.awt.Color(0, 0, 102));
         jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -608,10 +665,7 @@ public class Java_TicTacToe1 extends javax.swing.JFrame {
                 generateBtnActionPerformed(evt);
             }
         });
-        jPanel7.add(generateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 360, 30));
-
-        jupdatebtn.setText("Update");
-        jPanel7.add(jupdatebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, -1, -1));
+        jPanel7.add(generateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 360, 30));
 
         jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 680, 400, 90));
 
@@ -853,98 +907,67 @@ private JFrame frame;
  
 // Update individual player statistics
     private void updatePlayerStatistics(String playerName, String playerType, int totalMatches,int wins,int loss,double winPercentage){
-         connect(); // Ensure you are connected to the database
-         
-        try {
-            String sql = "{call UpdateStatistic(?, ?, ?, ?, ?, ?)}";
-            try (CallableStatement cst = con.prepareCall(sql)) {
-                cst.setString(1, playerName);
-                cst.setString(2, playerType);
-                cst.setInt(3,totalMatches);
-                cst.setInt(4,wins);
-                cst.setInt(5,loss );//loss
-                cst.setDouble(6,winPercentage);
-                cst.execute();
+       try {
+        // Prepare the SQL update statement
+        String sql = "UPDATE winandlossstatistic SET TotalMatches=?, Wins=?, Loss=?, WinPercentage=? WHERE player_name=? AND player_type=?";
 
-                // Update labels for wins
-                if (playerType.equals("X")) {
-                    xCount = wins;
-                    jtxtPlayerX.setText(String.valueOf(xCount));
-                } else if (playerType.equals("O")) {
-                    oCount = wins;
-                    jtxtPlayerO.setText(String.valueOf(oCount));
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Java_TicTacToe1.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // Calculate the win percentage
+        winPercentage = calculateWinPercentage(wins, totalMatches);
+
+        // Prepare the statement with the updated values
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setInt(1, totalMatches);
+        pstmt.setInt(2, wins);
+        pstmt.setInt(3, loss);
+        pstmt.setDouble(4, winPercentage);
+        pstmt.setString(5, playerName);
+        pstmt.setString(6, playerType);
+
+        // Execute the update
+        pstmt.execute();
+
+        // Close the PreparedStatement
+        pstmt.close();
+    } catch (SQLException e) {
+        // Handle any SQL exceptions
+        e.printStackTrace();
     }
-
-    // Update JTable with the latest statistics
-    private void updateJTable() {
-        try {
-            String sql = "SELECT * FROM winandlossstatistic";
-            try (PreparedStatement pst = con.prepareStatement(sql)) {
-                try (ResultSet rs = pst.executeQuery()) {
-                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                    model.setRowCount(0); // Clear the table
-
-               while (rs.next()) {
-                 Vector<Object> vector = new Vector<>();
-                vector.add(rs.getString("player_name"));
-                vector.add(rs.getString("player_type"));
-                vector.add(rs.getInt("TotalMatches"));
-                vector.add(rs.getInt("Wins"));
-                vector.add(rs.getInt("Loss"));
-                vector.add(rs.getDouble("WinPercentage"));
-
-                        model.addRow(vector);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-     
+}
     
     
     private void generateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateBtnActionPerformed
-         int xWins = Integer.parseInt(jtxtPlayerX.getText());
-        int oWins = Integer.parseInt(jtxtPlayerO.getText());
 
-        // Connect to database, if not already connected
-        connect();
+        int XWins = Integer.parseInt(jtxtPlayerX.getText());
+         int OWins= Integer.parseInt(jtxtPlayerO.getText());
 
-        // Start a transaction
+    // Connect to the database if not already connected
+    connect();
+
+    try {
+        con.setAutoCommit(false);
+
+        // Step 1: Update the `winandlossstatistic` table for player X
+        updatePlayerStatistics(playerX, "X", totalMatchesX, xWins, (totalMatchesX - xWins), calculateWinPercentage(xWins, totalMatchesX));
+
+        // Step 2: Update the `winandlossstatistic` table for player O
+        updatePlayerStatistics(playerO, "O", totalMatchesO, oWins, (totalMatchesO - oWins), calculateWinPercentage(oWins, totalMatchesO));
+
+        // Commit the transaction
+        con.commit();
+    } catch (SQLException e) {
         try {
-            con.setAutoCommit(false);
-
-            // Step 2: Update the `winandlossstatistics` table
-           updatePlayerStatistics(playerX, "X", totalMatches xWins, lossesX, winPercentageX);
-updatePlayerStatistics(playerO, "O", totalMatchesO, oWins, lossesO, winPercentageO);
-
-
-            // Commit the transaction
-            con.commit();
-        } catch (SQLException e) {
-            try {
-                con.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            e.printStackTrace();
-        } finally {
-            try {
-                con.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            con.rollback();
+        } catch (SQLException e1) {
+            e1.printStackTrace();
         }
-
-        // Step 3: Refresh the JTable (`jtable1`)
-        updateJTable();
-    
+        e.printStackTrace();
+    } finally {
+        try {
+            con.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    } 
     }//GEN-LAST:event_generateBtnActionPerformed
     /**
      * @param args the command line arguments
@@ -1012,11 +1035,8 @@ updatePlayerStatistics(playerO, "O", totalMatchesO, oWins, lossesO, winPercentag
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JButton jResetbtn1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton jexitbtn;
     private javax.swing.JTextField jtxtPlayerO;
     private javax.swing.JTextField jtxtPlayerX;
-    private javax.swing.JButton jupdatebtn;
     // End of variables declaration//GEN-END:variables
 }
